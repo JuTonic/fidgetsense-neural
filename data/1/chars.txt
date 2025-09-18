@@ -1,0 +1,3 @@
+sex=f
+hand=r
+height=164
