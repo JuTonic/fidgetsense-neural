@@ -5,7 +5,7 @@ import joblib
 import random
 
 N = 10
-WINDOW = 10
+WINDOW = 500
 
 random.seed(42)
 records = load_records()
