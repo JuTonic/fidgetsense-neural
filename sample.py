@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from record import AccData, Activity, Characteristics, Record
-from utils import load_records
 
 @dataclass(frozen=True)
 class SampleReading:
@@ -15,7 +14,7 @@ class Sample:
     readings: SampleReading
     label: Activity
 
-def get_sample_of_record(record: Record, index_of_last_reading: int, window: int) -> Sample:
+def get_sample_of_a_record(record: Record, index_of_last_reading: int, window: int) -> Sample:
     index_of_first_reading = index_of_last_reading - window
 
     if index_of_first_reading < 1:
@@ -43,8 +42,3 @@ def get_sample_of_record(record: Record, index_of_last_reading: int, window: int
         readings=sample_readings,
         label=label
     )
-
-
-records = load_records()
-
-print(get_sample_of_record(records[0], 8000, 500))

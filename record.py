@@ -166,8 +166,10 @@ class Record:
         )
 
     def get_activity_of_a_reading(self, i: int) -> Activity:
+        previous_activity = Activity.OTHER
         for index, activity, _ in self.labels.iter():
             if i < index:
-                return activity
+                return previous_activity
+            previous_activity = activity
 
         raise ValueError("Index must be smaller than the number of readings")
