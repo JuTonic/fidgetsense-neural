@@ -99,7 +99,7 @@ lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min
 model.summary()
 
 # Train the model
-model.fit(X_train, y_train, epochs=50, batch_size=32, validation_data=(X_test, y_test), callbacks=[lr_scheduler])
+model.fit(X_train, y_train, epochs=30, batch_size=32, validation_data=(X_test, y_test), callbacks=[lr_scheduler])
 
 loss, accuracy = model.evaluate(X_validate, y_validate)
 
