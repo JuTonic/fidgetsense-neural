@@ -1,4 +1,4 @@
-from record import Activity
+from record import AccData, Activity
 from sample import Sample, get_sample_of_a_record
 from utils import load_records
 import joblib
@@ -8,11 +8,10 @@ import tensorflow as tf
 from tensorflow.keras import layers, models
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.callbacks import ReduceLROnPlateau
 
-N = 5
-WINDOW = 400
+N = 4
+WINDOW = 200
 
 random.seed(42)
 records = load_records()
@@ -39,13 +38,16 @@ y_validate = []
 X = []
 y = []
 
+def compute_magnitude(acc_data: AccData):
+    return np.sqrt(np.power(acc_data.x, 2) + np.power(acc_data.y, 2) + np.power(acc_data.z, 2))
+
 for sample in samples:
     r = sample.readings
-    x = np.array([r.time_diff, r.first.x, r.first.y, r.first.z, r.second.x, r.second.y, r.second.z, r.third.x, r.third.y, r.third.z]).transpose()
+    x = np.array([r.time_diff, r.first.x, r.first.y, r.first.z, r.second.x, r.second.y, r.second.z, r.third.x, r.third.y, r.third.z, compute_magnitude(r.first), compute_magnitude(r.second), compute_magnitude(r.third)]).transpose()
     if len(x) != WINDOW:
         continue
 
-    if sample.name == "./data/17" or sample.name == "./data/19":
+    if sample.name == "./data/19":
         X_validate.append(x)
         y_validate.append(sample.label.value)
         continue
@@ -67,7 +69,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 model = models.Sequential()
 
 # Adding LSTM layer(s)
-model.add(layers.LSTM(128, return_sequences=True, input_shape=(WINDOW, 10)))  # LSTM with 128 units
+model.add(layers.LSTM(128, return_sequences=True, input_shape=(WINDOW, 13)))  # LSTM with 128 units
 model.add(layers.BatchNormalization())  # Batch normalization
 model.add(layers.Dropout(0.3))  # Dropout for regularization
 
@@ -97,7 +99,7 @@ lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min
 model.summary()
 
 # Train the model
-model.fit(X_train, y_train, epochs=30, batch_size=32, validation_data=(X_test, y_test), callbacks=[lr_scheduler])
+model.fit(X_train, y_train, epochs=50, batch_size=32, validation_data=(X_test, y_test), callbacks=[lr_scheduler])
 
 loss, accuracy = model.evaluate(X_validate, y_validate)
 
