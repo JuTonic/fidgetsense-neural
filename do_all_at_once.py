@@ -104,3 +104,5 @@ model.fit(X_train, y_train, epochs=30, batch_size=32, validation_data=(X_test, y
 loss, accuracy = model.evaluate(X_validate, y_validate)
 
 print(f"Test Accuracy: {accuracy:.4f}")
+
+model.save("model.h5")
