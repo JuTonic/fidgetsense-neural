@@ -10,8 +10,8 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.callbacks import ReduceLROnPlateau
 
-N = 4
-WINDOW = 300
+N = 3
+WINDOW = 250
 
 random.seed(42)
 records = load_records()
