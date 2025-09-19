@@ -10,6 +10,7 @@ class SampleReading:
 
 @dataclass(frozen=True)
 class Sample:
+    name: str
     chars: Characteristics
     readings: SampleReading
     label: Activity
@@ -38,6 +39,7 @@ def get_sample_of_a_record(record: Record, index_of_last_reading: int, window: i
     label = record.get_activity_of_a_reading(index_of_last_reading)
 
     return Sample(
+        name=record.name,
         chars=record.chars,
         readings=sample_readings,
         label=label

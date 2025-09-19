@@ -13,7 +13,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 model = models.Sequential()
 
-model.add(layers.Conv1D(64, 3, activation='relu', input_shape=(500, 10)))
+model.add(layers.Conv1D(64, 3, activation='relu', input_shape=(1000, 10)))
 model.add(layers.MaxPooling1D(2))
 model.add(layers.Conv1D(128, 3, activation='relu'))
 model.add(layers.MaxPooling1D(2))

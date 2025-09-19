@@ -4,8 +4,8 @@ from utils import load_records
 import joblib
 import random
 
-N = 10
-WINDOW = 500
+N = 3
+WINDOW = 800
 
 random.seed(42)
 records = load_records()

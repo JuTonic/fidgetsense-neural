@@ -10,7 +10,7 @@ y = []
 for sample in samples:
     r = sample.readings
     x = np.array([r.time_diff, r.first.x, r.first.y, r.first.z, r.second.x, r.second.y, r.second.z, r.third.x, r.third.y, r.third.z]).transpose()
-    if len(x) != 500:
+    if len(x) != 1000:
         continue
     X.append(x)
     y.append(sample.label.value)

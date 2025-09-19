@@ -12,3 +12,5 @@ def load_samples() -> list[Sample]:
 
 def load_train_data() -> tuple[NDArray[Any], NDArray[Any]]:
     return joblib.load("X_and_y.pkl")
+
+WINDOW = 500
