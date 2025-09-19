@@ -11,7 +11,7 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.callbacks import ReduceLROnPlateau
 
 N = 4
-WINDOW = 200
+WINDOW = 300
 
 random.seed(42)
 records = load_records()
