@@ -31,8 +31,8 @@ magnitude_3 = []
 activity_map = {
     0: "nothing",
     1: "typing",
-    2: "scrolling",
-    3: "fidgeting"
+    2: "scroll",
+    3: "fidget"
 }
 
 previous_time = 0
@@ -68,7 +68,7 @@ with open("readings.csv", "w") as f:
 
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print(f"nothing: {pred[0]}; typing: {pred[1]}; scrolling: {pred[2]}; fidgeting: {pred[3]}")
-                ascii_art = pyfiglet.figlet_format(activity_map[pred_activity])
+                ascii_art = pyfiglet.figlet_format(activity_map[pred_activity], width=200, font="doh")
                 print(ascii_art)
 
                 time_diff_arr = []
