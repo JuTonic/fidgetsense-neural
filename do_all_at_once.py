@@ -69,7 +69,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 model = models.Sequential()
 
 # Adding LSTM layer(s)
-model.add(layers.Bidirectional(layers.LSTM(128, return_sequences=True), input_shape=(WINDOW, 13)))
+model.add(layers.LSTM(128, return_sequences=True, input_shape=(WINDOW, 13)))  # LSTM with 128 units
 model.add(layers.BatchNormalization())  # Batch normalization
 model.add(layers.Dropout(0.3))  # Dropout for regularization
 
@@ -78,9 +78,8 @@ model.add(layers.LSTM(256, return_sequences=True))  # LSTM with 256 units
 model.add(layers.BatchNormalization())  # Batch normalization
 model.add(layers.Dropout(0.3))  # Dropout for regularization
 
-model.add(layers.Conv1D(64, 3, activation='relu', input_shape=(WINDOW, 10)))
-model.add(layers.MaxPooling1D(2))
-model.add(layers.LSTM(128))
+# Another LSTM layer or flatten the output to feed into dense layers
+model.add(layers.LSTM(128))  # LSTM with 128 units (this one is not returning sequences)
 
 # Add Dropout after LSTM
 model.add(layers.Dropout(0.5))  # Dropout to prevent overfitting
@@ -100,7 +99,7 @@ lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min
 model.summary()
 
 # Train the model
-model.fit(X_train, y_train, epochs=20, batch_size=32, validation_data=(X_test, y_test), callbacks=[lr_scheduler])
+model.fit(X_train, y_train, epochs=30, batch_size=32, validation_data=(X_test, y_test), callbacks=[lr_scheduler])
 
 loss, accuracy = model.evaluate(X_validate, y_validate)
 
