@@ -80,7 +80,7 @@ model.add(layers.Dropout(0.3))  # Dropout for regularization
 
 model.add(layers.Conv1D(64, 3, activation='relu', input_shape=(WINDOW, 10)))
 model.add(layers.MaxPooling1D(2))
-model.add(layers.LSTM(128, return_sequences=True))
+model.add(layers.LSTM(128))
 
 # Add Dropout after LSTM
 model.add(layers.Dropout(0.5))  # Dropout to prevent overfitting
